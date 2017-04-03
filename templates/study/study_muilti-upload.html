@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>测试 - 多图片上传 - muilti-upload</title>
+	<link href="../../static/css/style.css" rel="stylesheet" type="text/css" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>学习</title>
+    <link rel="stylesheet" href="../../static/css/app_four.css">
+    <!-- Bootstrap core CSS -->
+    <link href="../../static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../../static/css/admin.css" rel="stylesheet">
+      <link href="../../static/css/signin.css" rel="stylesheet">
+    <link href="../../static/css/study.css" rel="stylesheet">
+</head>
+<body>
+	<script src="../../static/js/jquery-3.1.1.min.js"></script>
+	<script src="../../static/js/yuanliefload.js"></script>
+	<br/><br/>
+    <nav role="navigation" class="navbar navbar-inverse dark-nav navbar-fixed-top">
+        <div class="navbar-header">
+            <button data-target="#bs-example-navbar-collapse-3" data-toggle="collapse" class="navbar-toggle" type="button">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+{#            <a href="#" class="navbar-brand">似水流年</a>#}
+            <img class="navbar-title" src="../../static/img/title_1.jpg">
+        </div>
+        <div id="bs-example-navbar-collapse-3" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="/home">主页</a></li>
+                <li><a href="/study">学习</a></li>
+                <li><a href="/user/blog">博客</a></li>
+                <li><a href="/doc">文档</a></li>
+                <li class="dropdown">
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">更多 <b class="caret"></b></a>
+                    <ul role="menu" class="dropdown-menu">
+                        <li><a href="/register">注册</a></li>
+                        <li><a href="/signin">登录</a></li>
+                        <li><a href="/signout">注销</a></li>
+                        <li><a href="#">我的世界</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/asset">网站控制台</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">微信公众号控制台</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+
+            <form role="search" class="navbar-form navbar-right">
+                <div class="form-group">
+                    <input type="text" placeholder="Search" class="form-control">
+                </div>
+                <button class="btn btn-success" type="submit">搜索</button>
+            </form>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li><a href="#">学习<span class="sr-only">(current)</span></a></li>
+            <li><a href="/study/upload">单文件上传测试</a></li>
+            <li class="active"><a href="/study/muilti-upload">多文件上传测试</a></li>
+            <li><a href="#">其他测试</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><a href="">其他测试</a></li>
+            <li><a href="">其他测试</a></li>
+            <li><a href="">其他测试</a></li>
+            <li><a href="">其他测试</a></li>
+            <li><a href="">其他测试</a></li>
+          </ul>
+        </div>
+        <div class="container container1">
+            <div id="mybox"></div>
+            <div>
+                <ul id="nameList"></ul>
+            </div>
+            <br/>上传进度：<br/><br/>
+            <div class="progress" id="progress">
+              <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" id="progress-bar" style="width: 0%;">
+                <span class="sr-only">0% Complete</span>
+              </div>
+            </div><br/>
+{#            <input type="button" value="提交" id="upload-button">#}
+            <button class="btn btn-lg btn-primary btn-block btn-muilti" type="submit" id="upload-button">提交</button>
+            <br/>
+            <script type="text/javascript">
+                $(function () {
+                    var $progress = $('#progress-bar');
+                    var $nameList = $('#nameList');
+                    var filebox = $('#mybox').yupload({
+                        btnText  	: '浏览' ,
+                        maxSize 	: 1024*1024*10	,//10M
+                        url 		: '/muilti-upload',
+                        onSelect	: function(list){
+                            var htmlArr = [];
+                            for(var i=0,len=list.length,item;i<len;i++){
+                                item = list[i];
+                                htmlArr.push('<li><span>'+item.size+'</span><span>'+item.name+'</span></li>');
+                            }
+                            $nameList.html(htmlArr.join(''));
+                        },
+                        onUpload	: function(p){
+                            $progress.width(p+'%').children(".sr-only").text(p+"% Complete");
+                        }
+                    });
+
+                    // Handle the submit button.
+                    $("#upload-button").on("click", function(e) {
+                        filebox.submitUpload();
+                    })
+                });
+            </script>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../../static/js/bootstrap.min.js"></script>
+</body>
+</html>

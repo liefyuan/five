@@ -1,0 +1,8 @@
+.container{
+    height: 300px;
+}
+
+.copyright{
+
+    position: absolute;  bottom: 0; /* 关键 */
+}
